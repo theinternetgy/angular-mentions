@@ -65,6 +65,7 @@ export class MentionDirective implements OnChanges {
   // event emitted whenever the mention list is opened or closed
   @Output() opened = new EventEmitter();
   @Output() closed = new EventEmitter();
+  @Output() selected = new EventEmitter();
 
   private triggerChars: { [key: string]: MentionConfig } = {};
 
@@ -342,10 +343,11 @@ export class MentionDirective implements OnChanges {
       let componentRef = this._viewContainerRef.createComponent(componentFactory);
       this.searchList = componentRef.instance;
       this.searchList.itemTemplate = this.mentionListTemplate;
-      componentRef.instance['itemClick'].subscribe(() => {
+      componentRef.instance['itemClick'].subscribe((x) => {
         nativeElement.focus();
         let fakeKeydown = { keyCode: KEY_ENTER, wasClick: true };
         this.keyHandler(fakeKeydown, nativeElement);
+        this.selected.emit(x);
       });
     }
     this.searchList.labelKey = this.activeConfig.labelKey;

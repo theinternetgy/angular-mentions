@@ -23,7 +23,7 @@ import { getCaretCoordinates } from './caret-coords';
       <li *ngFor="let item of items; let i = index"
         [class.active]="activeIndex==i" [class.mention-active]="!styleOff && activeIndex==i">
         <a class="dropdown-item" [class.mention-item]="!styleOff"
-          (mousedown)="activeIndex=i;itemClick.emit();$event.preventDefault()">
+          (mousedown)="activeIndex=i;itemClick.emit(item);$event.preventDefault()">
           <ng-template [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{'item':item}"></ng-template>
         </a>
       </li>
